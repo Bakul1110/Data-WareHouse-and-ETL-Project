@@ -1,0 +1,59 @@
+/*
+Creating tables in the bronze layer
+*/
+
+create table bronze_crm_customer_info
+(cst_id int, 
+cst_key nvarchar(50),
+cst_firstname nvarchar(50),
+cst_lastname nvarchar(50),
+cst_marital_status nvarchar(50),
+cst_gndr nvarchar(50),
+cst_create_date date
+)
+
+create table bronze_crm_sales_details
+(sls_ord_num nvarchar(50), 
+sls_prd_key nvarchar(50),
+sls_cust_id nvarchar(50),
+sls_order_dt nvarchar(50),
+sls_ship_dt nvarchar(50),
+sls_due_dt nvarchar(50),
+sls_sales float,
+sls_quantity float
+)
+
+
+create table bronze_crm_prd_info
+(prd_id int, 
+prd_key nvarchar(50),
+prd_nm nvarchar(50),
+prd_cost nvarchar(50),
+prd_line nvarchar(50),
+prd_start_dt Date,
+prd_end_dt Date
+)
+
+
+
+						
+------Same tables with ERP As well
+create table bronze_erp_CUST_AZ12
+(CID int, 
+GEN nvarchar(50),
+BDATE date
+) 		
+
+
+create table bronze_erp_LOCA101
+(CID nvarchar(50), 
+CNTRY nvarchar(50)
+)
+
+
+create table bronze_erp_PX_CAT_G1V2
+(ID nvarchar(50), 
+CAT nvarchar(50),
+SUBCAT nvarchar(50),
+MAINTENANCE nvarchar(50)
+)
