@@ -2,6 +2,9 @@
 Creating tables in the bronze layer
 */
 
+if object_id('bronze_crm_customer_info','U') is not null
+   Drop table bronze_crm_customer_info;
+
 create table bronze_crm_customer_info
 (cst_id int, 
 cst_key nvarchar(50),
