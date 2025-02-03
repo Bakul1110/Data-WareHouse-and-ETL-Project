@@ -2,6 +2,19 @@
 Creating tables in the bronze layer
 */
 
+--- cresting database DataWarehouse
+use master
+create database DataWarehouse
+
+use DataWarehouse
+
+create schema Bronze;
+Go
+create schema Silver;
+Go
+create schema Gold;
+Go
+
 if object_id('bronze_crm_customer_info','U') is not null
    Drop table bronze_crm_customer_info;
 
@@ -15,6 +28,8 @@ cst_gndr nvarchar(50),
 cst_create_date date
 )
 
+if object_id('bronze_crm_sales_details','U') is not null
+   Drop table bronze_crm_sales_details;
 create table bronze_crm_sales_details
 (sls_ord_num nvarchar(50), 
 sls_prd_key nvarchar(50),
@@ -26,7 +41,8 @@ sls_sales float,
 sls_quantity float
 )
 
-
+if object_id('bronze_crm_prd_info','U') is not null
+   Drop table bronze_crm_prd_info;
 create table bronze_crm_prd_info
 (prd_id int, 
 prd_key nvarchar(50),
@@ -40,7 +56,11 @@ prd_end_dt Date
 
 
 						
+							
+
 ------Same tables with ERP As well
+if object_id('bronze_erp_CUST_AZ12','U') is not null
+    Drop table bronze_erp_CUST_AZ12;
 create table bronze_erp_CUST_AZ12
 (CID int, 
 GEN nvarchar(50),
@@ -48,15 +68,20 @@ BDATE date
 ) 		
 
 
+if object_id('bronze_erp_LOCA101','U') is not null
+    Drop table bronze_erp_LOCA101;
 create table bronze_erp_LOCA101
 (CID nvarchar(50), 
 CNTRY nvarchar(50)
 )
 
 
+if object_id('bronze_erp_PX_CAT_G1V2','U') is not null
+    Drop table bronze_erp_PX_CAT_G1V2;
 create table bronze_erp_PX_CAT_G1V2
 (ID nvarchar(50), 
 CAT nvarchar(50),
 SUBCAT nvarchar(50),
 MAINTENANCE nvarchar(50)
 )
+--- creating DDL files so as to import data into 
