@@ -1,0 +1,26 @@
+/* 
+=========================================================================================================================================================================
+========================================================================================================================================================================
+This script is meant for creating the database for our project using the following codes and also initializing the schema or we can say the layers in which
+our data will be processed. The three layers are "Gold", "Silver" and "Bronze".
+/*
+
+if exists ( select 1 from sys.database where name = "DataWarehouse")
+BEGIN
+    Alter DataBase DataWarehouse set user with rollback immediate;
+    Drop database DataWarehouse;
+End;
+Go;
+
+--- cresting database DataWarehouse
+use master
+create database DataWarehouse
+
+use DataWarehouse
+
+create schema Bronze;
+Go
+create schema Silver;
+Go
+create schema Gold;
+Go
