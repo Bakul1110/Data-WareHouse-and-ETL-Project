@@ -1,0 +1,121 @@
+------- Creating a stored procedure
+create or alter procedure bronze_load_bronze as
+BEGIN
+
+if object_id('bronze_crm_customer_info','U') is not null
+   Drop table bronze_crm_customer_info;
+
+create table bronze_crm_customer_info
+(cst_id int, 
+cst_key nvarchar(50),
+cst_firstname nvarchar(50),
+cst_lastname nvarchar(50),
+cst_marital_status nvarchar(50),
+cst_gndr nvarchar(50),
+cst_create_date date
+)
+
+if object_id('bronze_crm_sales_details','U') is not null
+   Drop table bronze_crm_sales_details;
+create table bronze_crm_sales_details
+(sls_ord_num nvarchar(50), 
+sls_prd_key nvarchar(50),
+sls_cust_id int,
+sls_order_dt nvarchar(50),
+sls_ship_dt nvarchar(50),
+sls_due_dt nvarchar(50),
+sls_sales float,
+sls_quantity float,
+sls_price float
+)
+
+if object_id('bronze_crm_prd_info','U') is not null
+   Drop table bronze_crm_prd_info;
+create table bronze_crm_prd_info
+(prd_id int, 
+prd_key nvarchar(50),
+prd_nm nvarchar(50),
+prd_cost nvarchar(50),
+prd_line nvarchar(50),
+prd_start_dt Date,
+prd_end_dt Date
+)
+
+
+
+						
+							
+
+------Same tables with ERP As well
+if object_id('bronze_erp_CUST_AZ12','U') is not null
+    Drop table bronze_erp_CUST_AZ12;
+create table bronze_erp_CUST_AZ12
+(CID nvarchar(50),
+BDATE Date,
+GEN nvarchar(50)
+) 		
+
+
+if object_id('bronze_erp_LOCA101','U') is not null
+    Drop table bronze_erp_LOCA101;
+create table bronze_erp_LOCA101
+(CID nvarchar(50), 
+CNTRY nvarchar(50)
+)
+
+
+if object_id('bronze_erp_PX_CAT_G1V2','U') is not null
+    Drop table bronze_erp_PX_CAT_G1V2;
+create table bronze_erp_PX_CAT_G1V2
+(ID nvarchar(50), 
+CAT nvarchar(50),
+SUBCAT nvarchar(50),
+MAINTENANCE nvarchar(50)
+)
+--- creating DDL files so as to import data into the tables created
+---Inserting data in table 1
+truncate table bronze_crm_customer_info
+Bulk insert bronze_crm_customer_info
+from 'C:\Users\SSC\Downloads\sql-data-warehouse-project\sql-data-warehouse-project\datasets\source_crm\cust_info.csv'
+with (
+firstrow = 2, fieldterminator = ',',tablock)
+
+select * from bronze_crm_customer_info;
+select count(*) from bronze_crm_customer_info;
+
+---Inserting data in table 2
+
+truncate table bronze_crm_prd_info
+Bulk insert bronze_crm_prd_info
+from 'C:\Users\SSC\Downloads\sql-data-warehouse-project\sql-data-warehouse-project\datasets\source_crm\prd_info.csv'
+with (
+firstrow = 2, fieldterminator = ',',tablock)
+
+--- inserting table 3
+truncate table bronze_crm_sales_details
+bulk insert bronze_crm_sales_details
+from 'C:\Users\SSC\Downloads\sql-data-warehouse-project\sql-data-warehouse-project\datasets\source_crm\sales_details.csv'
+with(
+firstrow = 2, fieldterminator = ',',tablock)
+
+---inserting table 4
+
+truncate table bronze_erp_CUST_AZ12
+bulk insert bronze_erp_CUST_AZ12
+from 'C:\Users\SSC\Downloads\sql-data-warehouse-project\sql-data-warehouse-project\datasets\source_erp\CUST_AZ12.csv'
+with(
+firstrow = 2, fieldterminator = ',',tablock)
+
+---inserting table 5
+truncate table bronze_erp_LOCA101
+bulk insert bronze_erp_LOCA101
+from 'C:\Users\SSC\Downloads\sql-data-warehouse-project\sql-data-warehouse-project\datasets\source_erp\LOC_A101.csv'
+with (firstrow = 2, fieldterminator = ',',tablock)
+
+----inserting table 6
+truncate table bronze_erp_PX_CAT_G1V2
+Bulk insert bronze_erp_PX_CAT_G1V2
+from 'C:\Users\SSC\Downloads\sql-data-warehouse-project\sql-data-warehouse-project\datasets\source_erp\PX_CAT_G1V2.csv'
+with (firstrow = 2, fieldterminator = ',',tablock)
+
+END
